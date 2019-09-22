@@ -17,7 +17,7 @@ steps:
     git clone https://skia.googlesource.com/skia.git
     cd skia
     git checkout master
-    python2 tools\git-sync-deps
+    python tools\git-sync-deps
   displayName: 'Setup skia repo'
 
 - powershell: |
