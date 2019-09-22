@@ -17,13 +17,13 @@ steps:
   displayName: 'Fetch depot_tools'
   
 - script: |
-    set PATH=%PATH%;%cd%\depot_tools;
+    set PATH=%cd%\depot_tools;%PATH%;
     cd depot_tools
     gclient
   displayName: 'Config depot_tools'
   
 - script: |
-    set PATH=%PATH%;%cd%\depot_tools;
+    set PATH=%cd%\depot_tools;%PATH%;
     fetch skia
     cd skia
     python2 tools\git-sync-deps
