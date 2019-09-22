@@ -10,9 +10,16 @@ pool:
   vmImage: 'windows-2019'
 
 steps:
-- script: |
-    git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git
+- powershell: |
+    Invoke-Web -Uri "https://storage.googleapis.com/chrome-infra/depot_tools.zip" depot_tools.zip
+    &7z x depot_tools.zip -odepot_tools
+    Remove-Item depot_tools.zip
+    cd depot_tools
     git checkout master
+  displayname: 'Fetch depot_tools'
+
+- scripts: |
+    
     set PATH=%PATH%;%cd%\depot_tools;
     git clone https://skia.googlesource.com/skia.git
     cd skia
