@@ -11,14 +11,14 @@ pool:
 
 steps:
 - powershell: |
-    Invoke-Web -Uri "https://storage.googleapis.com/chrome-infra/depot_tools.zip" depot_tools.zip
+    Invoke-Web -Uri "https://storage.googleapis.com/chrome-infra/depot_tools.zip" -OutFile depot_tools.zip
     &7z x depot_tools.zip -odepot_tools
     Remove-Item depot_tools.zip
     cd depot_tools
     git checkout master
   displayname: 'Fetch depot_tools'
 
-- scripts: |
+- script: |
     set PATH=%PATH%;%cd%\depot_tools;
     git clone https://skia.googlesource.com/skia.git
     cd skia
