@@ -12,9 +12,11 @@ pool:
 steps:
 - script: |
     git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git
+    git checkout master
     set PATH=%PATH%;%cd%\depot_tools;
-    fetch skia
+    git clone https://skia.googlesource.com/skia.git
     cd skia
+    git checkout master
     python2 tools\git-sync-deps
   displayName: 'Setup skia repo'
 
