@@ -30,7 +30,7 @@ steps:
 - script: |
     set PATH=%cd%\depot_tools;%PATH%;
     cd skia
-    python2 tools\git-sync-deps
+    ..\depot_tools\python tools\git-sync-deps
   displayName: 'Sync skia deps'
   
 - powershell: |
