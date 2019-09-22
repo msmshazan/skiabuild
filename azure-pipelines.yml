@@ -7,18 +7,18 @@ trigger:
 - master
 
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: 'windows-2019'
 
 steps:
 - script: |
     git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git
-    set PATH=%PATH%;%cd%/depot_tools;
+    set PATH=%PATH%;%cd%\depot_tools;
     fetch skia
     cd skia
-    python2 tools/git-sync-deps
+    python2 tools\git-sync-deps
   displayName: 'Setup skia repo'
 
-- script: |
+- powershell: |
     cd skia
     bin/gn gen out/Shared_32_static_vs --args='is_official_build=true is_component_build=false target_os=\"win\" skia_use_system_expat=false skia_use_system_libjpeg_turbo=false skia_use_system_icu=false skia_use_system_libpng=false skia_use_system_libwebp=false skia_use_system_zlib=false extra_cflags=[  \"/EHsc\", \"/Z7\" , \"/wd4291\"  ] extra_ldflags=[ \"/DEBUG:FULL\" ] target_cpu=\"x32\"' --ide=vs
     bin/gn gen out/Shared_64_static_vs --args='is_official_build=true is_component_build=false target_os=\"win\" skia_use_system_expat=false skia_use_system_libjpeg_turbo=false skia_use_system_icu=false skia_use_system_libpng=false skia_use_system_libwebp=false skia_use_system_zlib=false extra_cflags=[  \"/EHsc\", \"/Z7\" , \"/wd4291\"  ] extra_ldflags=[ \"/DEBUG:FULL\" ] target_cpu=\"x64\"' --ide=vs
@@ -26,7 +26,7 @@ steps:
 
 - script: |
     cd skia
-    cd out/Shared_64_static_vs
+    cd out\Shared_64_static_vs
     msbuild all.sln
   displayName: 'Build skia'
 
