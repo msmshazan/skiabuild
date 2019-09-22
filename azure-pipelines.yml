@@ -16,7 +16,7 @@ steps:
     Remove-Item depot_tools.zip
     cd depot_tools
     git checkout master
-  displayname: 'Fetch depot_tools'
+  displayName: 'Fetch depot_tools'
 
 - script: |
     set PATH=%PATH%;%cd%\depot_tools;
