@@ -26,7 +26,7 @@ steps:
     set PATH=%PATH%;%cd%\depot_tools;
     fetch skia
     cd skia
-    python tools\git-sync-deps
+    python2 tools\git-sync-deps
   displayName: 'Setup skia repo'
 
 - powershell: |
