@@ -14,8 +14,6 @@ steps:
     Invoke-WebRequest -Uri "https://storage.googleapis.com/chrome-infra/depot_tools.zip" -OutFile depot_tools.zip
     &7z x depot_tools.zip -odepot_tools
     Remove-Item depot_tools.zip
-    cd depot_tools
-    git checkout master
   displayName: 'Fetch depot_tools'
 
 - script: |
