@@ -19,7 +19,6 @@ steps:
   displayname: 'Fetch depot_tools'
 
 - scripts: |
-    
     set PATH=%PATH%;%cd%\depot_tools;
     git clone https://skia.googlesource.com/skia.git
     cd skia
