@@ -19,11 +19,10 @@ steps:
 - script: |
     set PATH=%PATH%;%cd%\depot_tools;
     cd depot_tools
-    gclient
+    gclient sync
     cd ..
-    git clone https://skia.googlesource.com/skia.git
+    fetch skia
     cd skia
-    git checkout master
     python tools\git-sync-deps
   displayName: 'Setup skia repo'
 
