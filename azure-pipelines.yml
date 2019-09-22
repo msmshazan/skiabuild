@@ -45,6 +45,6 @@ steps:
     call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\Tools\VsDevCmd.bat"
     cd skia
     cd out\Shared_64_static_vs
-    msbuild obj\skia.csproj
+    msbuild obj\skia.vcproj
   displayName: 'Build skia'
 
