@@ -41,7 +41,7 @@ steps:
   displayName: 'Setup build projects'
 
 - script: |
-    call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\Tools\VsDevCmd.bat"
+    call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\Tools\VsDevCmd.bat"
     cd skia
     cd out\Shared_64_static_vs
     msbuild all.sln
