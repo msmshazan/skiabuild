@@ -19,7 +19,7 @@ steps:
 - script: |
     set PATH=%PATH%;%cd%\depot_tools;
     cd depot_tools
-    gclient sync
+    gclient
     cd ..
     fetch skia
     cd skia
