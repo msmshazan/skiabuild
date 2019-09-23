@@ -6,6 +6,9 @@
 trigger:
 - master
 
+variables:
+  DEPOT_TOOLS_WIN_TOOLCHAIN: '0'
+
 pool:
   vmImage: 'windows-2019'
 
