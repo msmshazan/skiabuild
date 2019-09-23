@@ -1,7 +1,3 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
 
 trigger:
 - master
@@ -40,14 +36,14 @@ steps:
     choco install llvm
     $env:Path = "$pwd\depot_tools;" + $env:Path
     cd skia
-    bin/gn gen out/Shared_32_static_vs --args='clang_win=\"C:\Program Files\LLVM\" is_official_build=true is_component_build=true target_os=\"win\" skia_use_system_expat=false skia_use_system_libjpeg_turbo=false skia_use_system_icu=false skia_use_system_libpng=false skia_use_system_libwebp=false skia_use_system_zlib=false extra_cflags=[  \"/EHsc\", \"/Z7\" , \"/wd4291\"  ] extra_ldflags=[ \"/DEBUG:FULL\" ] target_cpu=\"x32\"' --ide=vs
-    bin/gn gen out/Shared_64_static_vs --args='clang_win=\"C:\Program Files\LLVM\" is_official_build=true is_component_build=true target_os=\"win\" skia_use_system_expat=false skia_use_system_libjpeg_turbo=false skia_use_system_icu=false skia_use_system_libpng=false skia_use_system_libwebp=false skia_use_system_zlib=false extra_cflags=[  \"/EHsc\", \"/Z7\" , \"/wd4291\"  ] extra_ldflags=[ \"/DEBUG:FULL\" ] target_cpu=\"x64\"' --ide=vs
+    bin/gn gen out/Release_32 --args='clang_win=\"C:\Program Files\LLVM\" is_official_build=true is_component_build=true target_os=\"win\" skia_use_system_expat=false skia_use_system_libjpeg_turbo=false skia_use_system_icu=false skia_use_system_libpng=false skia_use_system_libwebp=false skia_use_system_zlib=false extra_cflags=[  \"/EHsc\", \"/Z7\" , \"/wd4291\"  ] extra_ldflags=[ \"/DEBUG:FULL\" ] target_cpu=\"x32\"' --ide=vs
+    bin/gn gen out/Release_64 --args='clang_win=\"C:\Program Files\LLVM\" is_official_build=true is_component_build=true target_os=\"win\" skia_use_system_expat=false skia_use_system_libjpeg_turbo=false skia_use_system_icu=false skia_use_system_libpng=false skia_use_system_libwebp=false skia_use_system_zlib=false extra_cflags=[  \"/EHsc\", \"/Z7\" , \"/wd4291\"  ] extra_ldflags=[ \"/DEBUG:FULL\" ] target_cpu=\"x64\"' --ide=vs
   displayName: 'Setup build projects'
 
 - script: |
     call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\Tools\VsDevCmd.bat"
     cd skia
-    cd out\Shared_64_static_vs
-    msbuild obj\skia.vcxproj
+    msbuild out\Release_32\obj\skia.vcxproj
+    msbuild out\Release_64\obj\skia.vcxproj
   displayName: 'Build skia'
 
