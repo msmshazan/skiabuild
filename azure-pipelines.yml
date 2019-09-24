@@ -45,8 +45,8 @@ steps:
 - script: |
     call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\Tools\VsDevCmd.bat"
     cd skia
-    msbuild out\Release_32\obj\skia.vcxproj
-    msbuild out\Release_64\obj\skia.vcxproj
+    msbuild out\Release_32\obj\skia.vcxproj /m
+    msbuild out\Release_64\obj\skia.vcxproj /m
   displayName: 'Build skia'
 
 - powershell: |
