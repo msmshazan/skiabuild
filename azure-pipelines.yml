@@ -64,8 +64,8 @@ steps:
     Move-Item -Path "x86" -Destination "lib"
     Move-Item -Path "lib" -Destination "Binaries"
     Copy-Item -Path "skia\include" -Destination "Binaries" -Recurse 
-    7za.exe a Binaries.zip Binaries\*
+    7za.exe a Skia.zip Binaries\*
   displayName: 'Copy Binaries'
 
-- publish: $(Build.SourcesDirectory)/Binaries.zip
+- publish: $(Build.SourcesDirectory)/Skia.zip
   artifact: Skia Binaries
