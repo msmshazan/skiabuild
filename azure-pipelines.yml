@@ -4,6 +4,7 @@ trigger:
 
 variables:
   DEPOT_TOOLS_WIN_TOOLCHAIN: '0'
+  SKIA_REVISION: 'c096654fa7c64fc2dccf38ca6ddd37f0e906000e'
 
 pool:
   vmImage: 'windows-2019'
@@ -24,6 +25,7 @@ steps:
 - script: |
     set PATH=%cd%\depot_tools;%PATH%;
     fetch skia
+    gclient sync --revision=%SKIA_REVISION%
   displayName: 'Fetch skia repo'
 
 - script: |
