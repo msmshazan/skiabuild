@@ -56,6 +56,8 @@ steps:
     New-Item -Name "Binaries" -ItemType "directory"
     Copy-Item -Path "skia\out\Release_64\*.lib" -Destination "x64" -Recurse 
     Copy-Item -Path "skia\out\Release_64\*.dll" -Destination "x64" -Recurse 
+    Copy-Item -Path "skia\out\Release_64\*.pdb" -Destination "x64" -Recurse 
+    Copy-Item -Path "skia\out\Release_32\*.pdb" -Destination "x64" -Recurse 
     Copy-Item -Path "skia\out\Release_32\*.lib" -Destination "x86" -Recurse 
     Copy-Item -Path "skia\out\Release_32\*.dll" -Destination "x86" -Recurse 
     Move-Item -Path "x64" -Destination "lib"
