@@ -47,3 +47,20 @@ steps:
     msbuild out\Release_64\obj\skia.vcxproj
   displayName: 'Build skia'
 
+- powershell: |
+    New-Item -Name "x64" -ItemType "directory" 
+    New-Item -Name "x86" -ItemType "directory"
+    New-Item -Name "lib" -ItemType "directory"
+    New-Item -Name "Binaries" -ItemType "directory"
+    Copy-Item -Path "skia\out\Release_64\*.lib" -Destination "x64" -Recurse 
+    Copy-Item -Path "skia\out\Release_64\*.dll" -Destination "x64" -Recurse 
+    Copy-Item -Path "skia\out\Release_32\*.lib" -Destination "x86" -Recurse 
+    Copy-Item -Path "skia\out\Release_32\*.dll" -Destination "x86" -Recurse 
+    Move-Item -Path "x64" -Destination "lib"
+    Move-Item -Path "x86" -Destination "lib"
+    Move-Item -Path "lib" -Destination "Binaries"
+    Copy-Item -Path "skia\include" -Destination "Binaries" -Recurse 
+  displayName: 'Copy Binaries'
+
+- publish: $(Build.SourcesDirectory)/Binaries
+  artifact: Skia Binaries
