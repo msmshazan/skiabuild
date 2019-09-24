@@ -66,10 +66,3 @@ steps:
 
 - publish: $(Build.SourcesDirectory)/Binaries
   artifact: Skia Binaries
-
-- task: GithubRelease@0 
-  displayName: 'GitHub Release'      
-  inputs:
-    gitHubConnection: msmshazan
-    repositoryName: msmshazan/skiabuild        
-    assets: $(Build.ArtifactStagingDirectory)/*
