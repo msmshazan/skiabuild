@@ -69,12 +69,15 @@ steps:
 
 - publish: $(Build.SourcesDirectory)/Skia.zip
   artifact: Skia Binaries
+
 - task: GitHubRelease@1
   inputs:
     gitHubConnection: 'msmshazan''s Github PAT'
     repositoryName: 'msmshazan/skiabuild'
     action: 'create'
     target: '$(Build.SourceVersion)'
-    tagSource: 'gitTag'
+    tagSource: 'userSpecifiedTag'
+    tag: 'Release'
+    title: 'Skia Binaries'
     changeLogCompareToRelease: 'lastFullRelease'
     changeLogType: 'commitBased'
