@@ -84,3 +84,4 @@ steps:
     title: 'Skia Binaries'
     changeLogCompareToRelease: 'lastFullRelease'
     changeLogType: 'commitBased'
+    assets: '$(Build.ArtifactStagingDirectory)/*' 
