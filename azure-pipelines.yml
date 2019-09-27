@@ -21,6 +21,7 @@ steps:
     cd depot_tools
     gclient
   displayName: 'Config depot_tools'
+  timeoutInMinutes: 0
   
 - script: |
     set PATH=%cd%\depot_tools;%PATH%;
@@ -48,6 +49,7 @@ steps:
     msbuild out\Release_32\obj\skia.vcxproj /m
     msbuild out\Release_64\obj\skia.vcxproj /m
   displayName: 'Build skia'
+  timeoutInMinutes: 0
 
 - powershell: |
     New-Item -Name "x64" -ItemType "directory" 
@@ -66,6 +68,7 @@ steps:
     Copy-Item -Path "skia\include" -Destination "Binaries" -Recurse 
     7z a Skia.zip Binaries\*
   displayName: 'Copy Binaries'
+  timeoutInMinutes: 0
 
 - publish: $(Build.SourcesDirectory)/Skia.zip
   artifact: Skia Binaries
