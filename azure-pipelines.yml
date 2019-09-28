@@ -4,84 +4,85 @@ trigger:
 
 variables:
   DEPOT_TOOLS_WIN_TOOLCHAIN: '0'
-  SKIA_REVISION: 'c096654fa7c64fc2dccf38ca6ddd37f0e906000e'
+  SKIA_REVISION: '2e856451654d02d20f1a59e7ee1016cbec033826'
 
-pool:
-  vmImage: 'windows-2019'
-
-steps:
-- powershell: |
-    Invoke-WebRequest -Uri "https://storage.googleapis.com/chrome-infra/depot_tools.zip" -OutFile depot_tools.zip
-    &7z x depot_tools.zip -odepot_tools
-    Remove-Item depot_tools.zip
-  displayName: 'Fetch depot_tools'
-  
-- script: |
-    set PATH=%cd%\depot_tools;%PATH%;
-    cd depot_tools
-    gclient
-  displayName: 'Config depot_tools'
+jobs:
+- job: Build_Skia
   timeoutInMinutes: 0
-  
-- script: |
-    set PATH=%cd%\depot_tools;%PATH%;
-    fetch skia
-    gclient sync --revision=%SKIA_REVISION%
-  displayName: 'Fetch skia repo'
+  pool:
+   vmImage: 'windows-2019'
+  steps:
+  - powershell: |
+      Invoke-WebRequest -Uri "https://storage.googleapis.com/chrome-infra/depot_tools.zip" -OutFile depot_tools.zip
+      &7z x depot_tools.zip -odepot_tools
+      Remove-Item depot_tools.zip
+    displayName: 'Fetch depot_tools'
 
-- script: |
-    set PATH=%cd%\depot_tools;%PATH%;
-    cd skia
-    ..\depot_tools\python tools\git-sync-deps
-  displayName: 'Sync skia deps'
-  
-- powershell: |
-    choco install llvm
-    $env:Path = "$pwd\depot_tools;" + $env:Path
-    cd skia
-    bin/gn gen out/Release_32 --args='clang_win=\"C:\Program Files\LLVM\" is_official_build=true is_component_build=true target_os=\"win\" skia_use_system_expat=false skia_use_system_libjpeg_turbo=false skia_use_system_icu=false skia_use_system_libpng=false skia_use_system_libwebp=false skia_use_system_zlib=false extra_cflags=[  \"/EHsc\", \"/Z7\" , \"/wd4291\"  ] extra_ldflags=[ \"/DEBUG:FULL\" ] target_cpu=\"x32\"' --ide=vs
-    bin/gn gen out/Release_64 --args='clang_win=\"C:\Program Files\LLVM\" is_official_build=true is_component_build=true target_os=\"win\" skia_use_system_expat=false skia_use_system_libjpeg_turbo=false skia_use_system_icu=false skia_use_system_libpng=false skia_use_system_libwebp=false skia_use_system_zlib=false extra_cflags=[  \"/EHsc\", \"/Z7\" , \"/wd4291\"  ] extra_ldflags=[ \"/DEBUG:FULL\" ] target_cpu=\"x64\"' --ide=vs
-  displayName: 'Setup build projects'
+  - script: |
+      set PATH=%cd%\depot_tools;%PATH%;
+      cd depot_tools
+      gclient
+    displayName: 'Config depot_tools'
 
-- script: |
-    call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\Tools\VsDevCmd.bat"
-    cd skia
-    msbuild out\Release_32\obj\skia.vcxproj /m
-    msbuild out\Release_64\obj\skia.vcxproj /m
-  displayName: 'Build skia'
-  timeoutInMinutes: 0
+  - script: |
+      set PATH=%cd%\depot_tools;%PATH%;
+      fetch skia
+      gclient sync --revision=%SKIA_REVISION%
+    displayName: 'Fetch skia repo'
 
-- powershell: |
-    New-Item -Name "x64" -ItemType "directory" 
-    New-Item -Name "x86" -ItemType "directory"
-    New-Item -Name "lib" -ItemType "directory"
-    New-Item -Name "Binaries" -ItemType "directory"
-    Copy-Item -Path "skia\out\Release_64\*.lib" -Destination "x64" -Recurse 
-    Copy-Item -Path "skia\out\Release_64\*.dll" -Destination "x64" -Recurse 
-    Copy-Item -Path "skia\out\Release_64\*.pdb" -Destination "x64" -Recurse 
-    Copy-Item -Path "skia\out\Release_32\*.pdb" -Destination "x86" -Recurse 
-    Copy-Item -Path "skia\out\Release_32\*.lib" -Destination "x86" -Recurse 
-    Copy-Item -Path "skia\out\Release_32\*.dll" -Destination "x86" -Recurse 
-    Move-Item -Path "x64" -Destination "lib"
-    Move-Item -Path "x86" -Destination "lib"
-    Move-Item -Path "lib" -Destination "Binaries"
-    Copy-Item -Path "skia\include" -Destination "Binaries" -Recurse 
-    7z a Skia.zip Binaries\*
-  displayName: 'Copy Binaries'
-  timeoutInMinutes: 0
+  - script: |
+      set PATH=%cd%\depot_tools;%PATH%;
+      cd skia
+      ..\depot_tools\python tools\git-sync-deps
+    displayName: 'Sync skia deps'
 
-- publish: $(Build.SourcesDirectory)/Skia.zip
-  artifact: Skia Binaries
+  - powershell: |
+      choco install llvm
+      $env:Path = "$pwd\depot_tools;" + $env:Path
+      cd skia
+      bin/gn gen out/Release_32 --args='clang_win=\"C:\Program Files\LLVM\" is_official_build=true is_component_build=true target_os=\"win\" skia_use_system_expat=false skia_use_system_libjpeg_turbo=false skia_use_system_icu=false skia_use_system_libpng=false skia_use_system_libwebp=false skia_use_system_zlib=false extra_cflags=[  \"/EHsc\", \"/Z7\" , \"/wd4291\"  ] extra_ldflags=[ \"/DEBUG:FULL\" ] target_cpu=\"x32\"' --ide=vs
+      bin/gn gen out/Release_64 --args='clang_win=\"C:\Program Files\LLVM\" is_official_build=true is_component_build=true target_os=\"win\" skia_use_system_expat=false skia_use_system_libjpeg_turbo=false skia_use_system_icu=false skia_use_system_libpng=false skia_use_system_libwebp=false skia_use_system_zlib=false extra_cflags=[  \"/EHsc\", \"/Z7\" , \"/wd4291\"  ] extra_ldflags=[ \"/DEBUG:FULL\" ] target_cpu=\"x64\"' --ide=vs
+    displayName: 'Setup build projects'
 
-- task: GitHubRelease@1
-  inputs:
-    gitHubConnection: 'msmshazan''s Github PAT'
-    repositoryName: 'msmshazan/skiabuild'
-    action: 'create'
-    target: '$(Build.SourceVersion)'
-    tagSource: 'userSpecifiedTag'
-    tag: 'Release-$(SKIA_REVISION)'
-    title: 'Skia Binaries'
-    changeLogCompareToRelease: 'lastFullRelease'
-    changeLogType: 'commitBased'
-    assets: '$(Build.SourcesDirectory)/Skia.zip'
+  - script: |
+      call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\Tools\VsDevCmd.bat"
+      cd skia
+      msbuild out\Release_32\obj\skia.vcxproj /m
+      msbuild out\Release_64\obj\skia.vcxproj /m
+      msbuild out\Release_32\obj\skottie.vcxproj /m
+      msbuild out\Release_64\obj\skottie.vcxproj /m
+    displayName: 'Build skia'
+
+  - powershell: |
+      New-Item -Name "x64" -ItemType "directory" 
+      New-Item -Name "x86" -ItemType "directory"
+      New-Item -Name "lib" -ItemType "directory"
+      New-Item -Name "Binaries" -ItemType "directory"
+      Copy-Item -Path "skia\out\Release_64\*.lib" -Destination "x64" -Recurse 
+      Copy-Item -Path "skia\out\Release_64\*.dll" -Destination "x64" -Recurse 
+      Copy-Item -Path "skia\out\Release_64\*.pdb" -Destination "x64" -Recurse 
+      Copy-Item -Path "skia\out\Release_32\*.pdb" -Destination "x86" -Recurse 
+      Copy-Item -Path "skia\out\Release_32\*.lib" -Destination "x86" -Recurse 
+      Copy-Item -Path "skia\out\Release_32\*.dll" -Destination "x86" -Recurse 
+      Move-Item -Path "x64" -Destination "lib"
+      Move-Item -Path "x86" -Destination "lib"
+      Move-Item -Path "lib" -Destination "Binaries"
+      Copy-Item -Path "skia\include" -Destination "Binaries" -Recurse 
+      7z a Skia.zip Binaries\*
+    displayName: 'Copy Binaries'
+
+  - publish: $(Build.SourcesDirectory)/Skia.zip
+    artifact: Skia Binaries
+
+  - task: GitHubRelease@1
+    inputs:
+      gitHubConnection: 'msmshazan''s Github PAT'
+      repositoryName: 'msmshazan/skiabuild'
+      action: 'create'
+      target: '$(Build.SourceVersion)'
+      tagSource: 'userSpecifiedTag'
+      tag: 'Release-$(SKIA_REVISION)'
+      title: 'Skia Binaries'
+      changeLogCompareToRelease: 'lastFullRelease'
+      changeLogType: 'commitBased'
+      assets: '$(Build.SourcesDirectory)/Skia.zip'
