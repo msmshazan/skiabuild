@@ -55,6 +55,8 @@ jobs:
       msbuild out\Release_64\obj\modules\skshaper\skshaper.vcxproj /m
       msbuild out\Release_32\obj\modules\sksg\sksg.vcxproj /m
       msbuild out\Release_64\obj\modules\sksg\sksg.vcxproj /m
+      msbuild out\Release_32\obj\modules\particles\particles.vcxproj /m
+      msbuild out\Release_64\obj\modules\particles\particles.vcxproj /m
     displayName: 'Build skia'
 
   - powershell: |
