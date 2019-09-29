@@ -40,8 +40,8 @@ jobs:
       choco install llvm
       $env:Path = "$pwd\depot_tools;" + $env:Path
       cd skia
-      bin/gn gen out/Release_32 --args='skia_enable_skottie=true clang_win=\"C:\Program Files\LLVM\" is_official_build=true is_component_build=false target_os=\"win\" skia_use_system_expat=false skia_use_system_libjpeg_turbo=false skia_use_system_icu=false skia_use_system_libpng=false skia_use_system_libwebp=false skia_use_system_zlib=false extra_cflags=[  \"/EHsc\", \"/Z7\" , \"/wd4291\" , \"/arch:AVX2\"  ] extra_ldflags=[ \"/DEBUG:FULL\" ] target_cpu=\"x32\"' --ide=vs
-      bin/gn gen out/Release_64 --args='skia_enable_skottie=true clang_win=\"C:\Program Files\LLVM\" is_official_build=true is_component_build=false target_os=\"win\" skia_use_system_expat=false skia_use_system_libjpeg_turbo=false skia_use_system_icu=false skia_use_system_libpng=false skia_use_system_libwebp=false skia_use_system_zlib=false extra_cflags=[  \"/EHsc\", \"/Z7\" , \"/wd4291\" , \"/arch:AVX2\"  ] extra_ldflags=[ \"/DEBUG:FULL\" ] target_cpu=\"x64\"' --ide=vs
+      bin/gn gen out/Release_32 --args='skia_enable_skottie=true clang_win=\"C:\Program Files\LLVM\" is_official_build=true is_component_build=false target_os=\"win\" skia_use_system_expat=false skia_use_system_libjpeg_turbo=false skia_use_system_icu=false skia_use_system_libpng=false skia_use_system_libwebp=false skia_use_system_zlib=false extra_cflags=[  \"/EHsc\", \"/Z7\" , \"/wd4291\" , \"/arch:AVX\"  ] extra_ldflags=[ \"/DEBUG:FULL\" ] target_cpu=\"x32\"' --ide=vs
+      bin/gn gen out/Release_64 --args='skia_enable_skottie=true clang_win=\"C:\Program Files\LLVM\" is_official_build=true is_component_build=false target_os=\"win\" skia_use_system_expat=false skia_use_system_libjpeg_turbo=false skia_use_system_icu=false skia_use_system_libpng=false skia_use_system_libwebp=false skia_use_system_zlib=false extra_cflags=[  \"/EHsc\", \"/Z7\" , \"/wd4291\" , \"/arch:AVX\"  ] extra_ldflags=[ \"/DEBUG:FULL\" ] target_cpu=\"x64\"' --ide=vs
     displayName: 'Setup build projects'
 
   - script: |
