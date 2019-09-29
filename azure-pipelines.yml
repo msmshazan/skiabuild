@@ -74,10 +74,10 @@ jobs:
       Move-Item -Path "x86" -Destination "lib"
       Move-Item -Path "lib" -Destination "Binaries"
       Copy-Item -Path "skia\include" -Destination "Binaries" -Recurse 
-      7z a Skia.zip Binaries\*
+      7z a $(Build.ArtifactStagingDirectory)\Skia.zip Binaries\*
     displayName: 'Copy Binaries'
 
-  - publish: $(Build.SourcesDirectory)/Skia.zip
+  - publish: $(Build.ArtifactStagingDirectory)/Skia.zip
     artifact: Skia Binaries
 
   - task: GitHubRelease@1
@@ -91,4 +91,4 @@ jobs:
       title: 'Skia Binaries'
       changeLogCompareToRelease: 'lastFullRelease'
       changeLogType: 'commitBased'
-      assets: '$(Build.SourcesDirectory)/Skia.zip'
+      assets: '$(Build.ArtifactStagingDirectory)/Skia.zip'
