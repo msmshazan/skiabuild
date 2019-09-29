@@ -51,8 +51,12 @@ jobs:
       cd skia
       msbuild out\Release_32\obj\skia.vcxproj /m
       msbuild out\Release_64\obj\skia.vcxproj /m
-      msbuild out\Release_32\obj\modules\skottie.vcxproj /m
-      msbuild out\Release_64\obj\modules\skottie.vcxproj /m
+      msbuild out\Release_32\obj\modules\skottie\skottie.vcxproj /m
+      msbuild out\Release_64\obj\modules\skottie\skottie.vcxproj /m
+      msbuild out\Release_32\obj\modules\skshaper\skshaper.vcxproj /m
+      msbuild out\Release_64\obj\modules\skshaper\skshaper.vcxproj /m
+      msbuild out\Release_32\obj\modules\sksg\sksg.vcxproj /m
+      msbuild out\Release_64\obj\modules\sksg\sksg.vcxproj /m
     displayName: 'Build skia'
 
   - powershell: |
