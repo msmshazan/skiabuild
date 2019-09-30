@@ -4,7 +4,7 @@ trigger:
 
 variables:
   DEPOT_TOOLS_WIN_TOOLCHAIN: '0'
-  SKIA_REVISION: '2e856451654d02d20f1a59e7ee1016cbec033826'
+  SKIA_REVISION: '0e75000214021cc21d92d0b916f5ce1972a26de5'
 
 jobs:
 - job: Build_Skia
