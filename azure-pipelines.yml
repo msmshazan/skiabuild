@@ -4,6 +4,8 @@ trigger:
 
 variables:
   DEPOT_TOOLS_WIN_TOOLCHAIN: '0'
+  DEPOT_TOOLS_METRICS: '0'
+  PYTHON_HOME: ''
   SKIA_REVISION: '9c17be5301a6b13bc6736fd72086b6dad0f6cc20'
 
 jobs:
