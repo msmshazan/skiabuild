@@ -21,6 +21,7 @@ jobs:
     displayName: 'Fetch depot_tools'
 
   - script: |
+      del C:\ProgramData\Chocolatey\bin\pytho*.exe
       set PATH=%cd%\depot_tools;%PATH%;
       cd depot_tools
       gclient
