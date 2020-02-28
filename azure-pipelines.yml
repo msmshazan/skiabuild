@@ -6,7 +6,7 @@ variables:
   DEPOT_TOOLS_WIN_TOOLCHAIN: '0'
   DEPOT_TOOLS_METRICS: '0'
   PYTHON_HOME: ''
-  SKIA_REVISION: ' 92ca3baba6a5d4c385ca684dc9db660efa1f2d94'
+  SKIA_REVISION: ' 96380c2df4c58723174f005758056aead7e1da98'
 
 jobs:
 - job: Build_Skia
