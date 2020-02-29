@@ -89,7 +89,7 @@ jobs:
 
   - task: GitHubRelease@1
     inputs:
-      gitHubConnection: 'msmshazan''s Github PAT'
+      gitHubConnection: 'Github PAT'
       repositoryName: 'msmshazan/skiabuild'
       action: 'create'
       target: '$(Build.SourceVersion)'
