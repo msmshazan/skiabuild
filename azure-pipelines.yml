@@ -7,6 +7,8 @@ variables:
   DEPOT_TOOLS_METRICS: '0'
   PYTHON_HOME: ''
   SKIA_REVISION: ' 05c1e1c4745d36600122bcd77a048042432c46fb'
+  PYTHONWARNINGS: 'ignore:DEPRECATION::pip._internal.cli.base_command'
+  GCLIENT_PY3: '1'
 
 jobs:
 - job: Build_Skia
