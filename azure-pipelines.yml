@@ -52,9 +52,9 @@ jobs:
   - script: |
       call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\Tools\VsDevCmd.bat"
       cd skia
-      cd out\Release_32
+      cd out\Release_32\obj
       dir 
-      cd ..\..
+      cd ..\..\..
       msbuild out\Release_32\obj\skia.vcxproj /m
       msbuild out\Release_64\obj\skia.vcxproj /m
       msbuild out\Release_32\obj\modules\skottie\skottie.vcxproj /m
