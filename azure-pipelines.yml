@@ -21,50 +21,63 @@ jobs:
       &7z x depot_tools.zip -odepot_tools
       Remove-Item depot_tools.zip
     displayName: 'Fetch depot_tools'
-
+  
+  - powershell: |
+      $env:DEPOT_TOOLS_WIN_TOOLCHAIN=0
+      $env:Path = "$pwd\depot_tools;" + $env:Path
+      cd depot_tools
+      ./update_depot_tools.bat
+      dir
+    displayName: 'Config depot_tools'
+  
   - script: |
       del C:\ProgramData\Chocolatey\bin\pytho*.exe
-      set PATH=%cd%\depot_tools;%PATH%;
-      cd depot_tools
-      gclient
-    displayName: 'Config depot_tools'
-
-  - script: |
-      set PATH=%cd%\depot_tools;%PATH%;
-      fetch skia
-      gclient sync --revision=%SKIA_REVISION%
-    displayName: 'Fetch skia repo'
-
-  - script: |
-      set PATH=%cd%\depot_tools;%PATH%;
+      git clone https://skia.googlesource.com/skia
       cd skia
-      ..\depot_tools\python tools\git-sync-deps
-    displayName: 'Sync skia deps'
+    displayName: 'Fetch angle repo'
 
   - powershell: |
-      Choco install llvm 2>&1>$null
+      $env:DEPOT_TOOLS_WIN_TOOLCHAIN=0
       $env:Path = "$pwd\depot_tools;" + $env:Path
+      refreshenv
       cd skia
-      bin/gn gen out/Release_32 --args='skia_enable_skottie=true clang_win=\"C:\Program Files\LLVM\" is_official_build=true is_component_build=false target_os=\"win\" skia_use_system_expat=false skia_use_system_libjpeg_turbo=false skia_use_system_icu=false skia_use_system_libpng=false skia_use_system_libwebp=false skia_use_system_zlib=false skia_use_system_harfbuzz=false extra_cflags=[  \"/EHsc\", \"/Z7\" , \"/wd4291\" , \"/arch:AVX\"  ] extra_ldflags=[ \"/DEBUG:FULL\" ] target_cpu=\"x32\"' --ide=vs
-      bin/gn gen out/Release_64 --args='skia_enable_skottie=true clang_win=\"C:\Program Files\LLVM\" is_official_build=true is_component_build=false target_os=\"win\" skia_use_system_expat=false skia_use_system_libjpeg_turbo=false skia_use_system_icu=false skia_use_system_libpng=false skia_use_system_libwebp=false skia_use_system_zlib=false skia_use_system_harfbuzz=false extra_cflags=[  \"/EHsc\", \"/Z7\" , \"/wd4291\" , \"/arch:AVX\"  ] extra_ldflags=[ \"/DEBUG:FULL\" ] target_cpu=\"x64\"' --ide=vs
-    displayName: 'Setup build projects'
+      python tools/git-sync-deps
+      refreshenv
+      gclient sync --revision=$(SKIA_REVISION)
+    displayName: 'Setup angle deps'
 
   - script: |
-      call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\Tools\VsDevCmd.bat"
+      set PATH=%cd%\depot_tools;%PATH%;
+      cd skia
+    displayName: 'Sync skia'
+
+  - powershell: |
+      choco install llvm 2>&1>$null
+      $env:DEPOT_TOOLS_WIN_TOOLCHAIN=0
+      $env:Path = "$pwd\depot_tools;" + $env:Path
+      python -m pip --disable-pip-version-check install pywin32
+      cd skia
+      gn gen out/Build_32 --args='skia_enable_skottie=true is_official_build=true is_clang=true is_debug=false use_custom_libcxx=true is_component_build=false skia_use_system_expat=false skia_use_system_libjpeg_turbo=false skia_use_system_icu=false skia_use_system_libpng=false skia_use_system_libwebp=false skia_use_system_zlib=false skia_use_system_harfbuzz=false target_cpu=\"x32\"' --ide=vs
+      gn gen out/Build_64 --args='skia_enable_skottie=true is_official_build=true is_clang=true is_debug=false use_custom_libcxx=true is_component_build=false skia_use_system_expat=false skia_use_system_libjpeg_turbo=false skia_use_system_icu=false skia_use_system_libpng=false skia_use_system_libwebp=false skia_use_system_zlib=false skia_use_system_harfbuzz=false target_cpu=\"x64\"' --ide=vs
+    displayName: 'Setup build projects'
+
+  - powershell: |
+      $env:Path = "$pwd\depot_tools;" + $env:Path
+      &("C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\Tools\VsDevCmd.bat")
       cd skia
       cd out\Release_32\obj
       dir 
       cd ..\..\..
-      msbuild out\Release_32\obj\skia.vcxproj /m
-      msbuild out\Release_64\obj\skia.vcxproj /m
-      msbuild out\Release_32\obj\modules\skottie\skottie.vcxproj /m
-      msbuild out\Release_64\obj\modules\skottie\skottie.vcxproj /m
-      msbuild out\Release_32\obj\modules\skshaper\skshaper.vcxproj /m
-      msbuild out\Release_64\obj\modules\skshaper\skshaper.vcxproj /m
-      msbuild out\Release_32\obj\modules\sksg\sksg.vcxproj /m
-      msbuild out\Release_64\obj\modules\sksg\sksg.vcxproj /m
-      msbuild out\Release_32\obj\modules\particles\particles.vcxproj /m
-      msbuild out\Release_64\obj\modules\particles\particles.vcxproj /m
+      autoninja -C out\Build_32 skia
+      autoninja -C out\Build_64 skia
+      autoninja -C out\Build_32 modules\skottie
+      autoninja -C out\Build_64 modules\skottie
+      autoninja -C out\Build_32 modules\skshaper
+      autoninja -C out\Build_64 modules\skshaper
+      autoninja -C out\Build_32 modules\sksg
+      autoninja -C out\Build_64 modules\sksg
+      autoninja -C out\Build_32 modules\particles
+      autoninja -C out\Build_64 modules\particles
     displayName: 'Build skia'
 
   - powershell: |
@@ -72,12 +85,12 @@ jobs:
       New-Item -Name "x86" -ItemType "directory"
       New-Item -Name "lib" -ItemType "directory"
       New-Item -Name "Binaries" -ItemType "directory"
-      Copy-Item -Path "skia\out\Release_64\*.lib" -Destination "x64" -Recurse 
-      Copy-Item -Path "skia\out\Release_64\*.dll" -Destination "x64" -Recurse 
-      Copy-Item -Path "skia\out\Release_64\*.pdb" -Destination "x64" -Recurse 
-      Copy-Item -Path "skia\out\Release_32\*.pdb" -Destination "x86" -Recurse 
-      Copy-Item -Path "skia\out\Release_32\*.lib" -Destination "x86" -Recurse 
-      Copy-Item -Path "skia\out\Release_32\*.dll" -Destination "x86" -Recurse 
+      Copy-Item -Path "skia\out\Build_64\*.lib" -Destination "x64" -Recurse 
+      Copy-Item -Path "skia\out\Build_64\*.dll" -Destination "x64" -Recurse 
+      Copy-Item -Path "skia\out\Build_64\*.pdb" -Destination "x64" -Recurse 
+      Copy-Item -Path "skia\out\Build_32\*.pdb" -Destination "x86" -Recurse 
+      Copy-Item -Path "skia\out\Build_32\*.lib" -Destination "x86" -Recurse 
+      Copy-Item -Path "skia\out\Build_32\*.dll" -Destination "x86" -Recurse 
       Move-Item -Path "x64" -Destination "lib"
       Move-Item -Path "x86" -Destination "lib"
       Move-Item -Path "lib" -Destination "Binaries"
