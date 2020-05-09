@@ -33,6 +33,7 @@ jobs:
   - script: |
       del C:\ProgramData\Chocolatey\bin\pytho*.exe
       git clone https://skia.googlesource.com/skia
+      git checkout $(SKIA_REVISION)
       cd skia
     displayName: 'Fetch skia repo'
 
@@ -41,9 +42,8 @@ jobs:
       $env:Path = "$pwd\depot_tools;" + $env:Path
       refreshenv
       cd skia
-      python tools/git-sync-deps
+      python2 tools/git-sync-deps
       refreshenv
-      gclient sync --revision=$(SKIA_REVISION)
     displayName: 'Setup skia deps'
 
   - script: |
