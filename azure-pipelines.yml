@@ -42,7 +42,7 @@ jobs:
       $env:Path = "$pwd\depot_tools;" + $env:Path
       refreshenv
       cd skia
-      python2 tools/git-sync-deps
+      python tools/git-sync-deps
       refreshenv
     displayName: 'Setup skia deps'
 
