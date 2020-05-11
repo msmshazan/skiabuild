@@ -52,7 +52,7 @@ jobs:
     displayName: 'Sync skia'
 
   - powershell: |
-      choco install llvm 2>&1>$null
+      choco install llvm
       $env:DEPOT_TOOLS_WIN_TOOLCHAIN=0
       $env:Path = "$pwd\depot_tools;" + $env:Path
       python -m pip --disable-pip-version-check install pywin32
