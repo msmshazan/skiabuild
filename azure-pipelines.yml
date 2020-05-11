@@ -64,23 +64,24 @@ jobs:
 
   - powershell: |
       $env:Path = "$pwd\depot_tools;" + $env:Path
-      &("C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\Tools\VsDevCmd.bat")
       cd skia
+      &("C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars32.bat")
       autoninja -C out\Build_32 skia
-      autoninja -C out\Build_64 skia
       autoninja -C out\Build_32 modules\skottie
-      autoninja -C out\Build_64 modules\skottie
       autoninja -C out\Build_32 modules\skshaper
-      autoninja -C out\Build_64 modules\skshaper
       autoninja -C out\Build_32 modules\sksg
-      autoninja -C out\Build_64 modules\sksg
       autoninja -C out\Build_32 modules\skparagraph
-      autoninja -C out\Build_64 modules\skparagraph
       autoninja -C out\Build_32 modules\skplaintexteditor
-      autoninja -C out\Build_64 modules\skplaintexteditor
       autoninja -C out\Build_32 modules\skresources
-      autoninja -C out\Build_64 modules\skresources
       autoninja -C out\Build_32 modules\particles
+      &("C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat")
+      autoninja -C out\Build_64 skia
+      autoninja -C out\Build_64 modules\skottie
+      autoninja -C out\Build_64 modules\skshaper
+      autoninja -C out\Build_64 modules\sksg
+      autoninja -C out\Build_64 modules\skparagraph
+      autoninja -C out\Build_64 modules\skplaintexteditor
+      autoninja -C out\Build_64 modules\skresources
       autoninja -C out\Build_64 modules\particles
     displayName: 'Build skia'
 
