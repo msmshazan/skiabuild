@@ -52,20 +52,20 @@ jobs:
     displayName: 'Sync skia'
 
   - powershell: |
-      choco install llvm
+      choco install llvm 2>&1>$null
       refreshenv
       $env:DEPOT_TOOLS_WIN_TOOLCHAIN=0
       $env:Path = "$pwd\depot_tools;" + $env:Path
       python -m pip --disable-pip-version-check install pywin32
       cd skia
       gn gen out/Build_32 --args='skia_enable_skottie=true skia_enable_skshaper=true clang_win=\"C:\Program Files\LLVM\" is_official_build=true is_debug=false is_component_build=false skia_use_system_expat=false skia_use_system_libjpeg_turbo=false skia_use_system_icu=false skia_use_system_libpng=false skia_use_system_libwebp=false skia_use_system_zlib=false skia_use_system_harfbuzz=false target_cpu=\"x86\"'
-      gn args out/Build_32 --list
       gn gen out/Build_64 --args='skia_enable_skottie=true skia_enable_skshaper=true clang_win=\"C:\Program Files\LLVM\" is_official_build=true is_debug=false is_component_build=false skia_use_system_expat=false skia_use_system_libjpeg_turbo=false skia_use_system_icu=false skia_use_system_libpng=false skia_use_system_libwebp=false skia_use_system_zlib=false skia_use_system_harfbuzz=false target_cpu=\"x64\"'
     displayName: 'Setup build projects'
 
   - powershell: |
       $env:Path = "$pwd\depot_tools;" + $env:Path
       &("C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\Tools\VsDevCmd.bat")
+      cd skia
       autoninja -C out\Build_32 skia
       autoninja -C out\Build_64 skia
       autoninja -C out\Build_32 modules\skottie
