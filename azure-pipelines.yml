@@ -62,9 +62,9 @@ jobs:
       gn gen out/Build_64 --args='skia_enable_skottie=true skia_enable_tools=true skia_enable_skshaper=true clang_win=\"C:\Program Files\LLVM\" is_official_build=true is_debug=false is_component_build=false skia_use_system_expat=false skia_use_system_libjpeg_turbo=false skia_use_system_icu=false skia_use_system_libpng=false skia_use_system_libwebp=false skia_use_system_zlib=false skia_use_system_harfbuzz=false target_cpu=\"x64\"'
       cd out\Build_32\obj
       dir
-      cd modules
+      cd modules\skplaintexteditor
       dir 
-      cd ..
+      cd ..\..
       cd ..\..\..
     displayName: 'Setup build projects'
 
