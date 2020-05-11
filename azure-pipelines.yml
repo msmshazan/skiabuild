@@ -62,13 +62,9 @@ jobs:
       gn gen out/Build_64 --args='skia_enable_skottie=true skia_enable_sksharper=true clang_win=\"C:\Program Files\LLVM\" is_official_build=true is_debug=false is_component_build=false skia_use_system_expat=false skia_use_system_libjpeg_turbo=false skia_use_system_icu=false skia_use_system_libpng=false skia_use_system_libwebp=false skia_use_system_zlib=false skia_use_system_harfbuzz=false target_cpu=\"x64\"'
     displayName: 'Setup build projects'
 
-  - script: |
-      set PATH=%cd%\depot_tools;%PATH%;
-      call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\Tools\VsDevCmd.bat"
-      cd skia
-      cd out\Build_32\obj
-      dir 
-      cd ..\..\..
+  - powershell: |
+      $env:Path = "$pwd\depot_tools;" + $env:Path
+      &("C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\Tools\VsDevCmd.bat")
       autoninja -C out\Build_32 skia
       autoninja -C out\Build_64 skia
       autoninja -C out\Build_32 modules\skottie
