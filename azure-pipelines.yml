@@ -101,6 +101,8 @@ jobs:
       Move-Item -Path "lib" -Destination "Binaries"
       Copy-Item -Path "skia\include" -Destination "Binaries" -Recurse 
       Copy-Item -Path "skia\modules\skottie\include" -Destination "Binaries\skottie\include" -Recurse 
+      Copy-Item -Path "skia\modules\skresources\include" -Destination "Binaries\skresources\include" -Recurse 
+      Copy-Item -Path "skia\modules\skparagraph\include" -Destination "Binaries\skparagraph\include" -Recurse 
       Copy-Item -Path "skia\modules\skshaper\include" -Destination "Binaries\skshaper\include" -Recurse 
       Copy-Item -Path "skia\modules\sksg\include" -Destination "Binaries\sksg\include" -Recurse 
       Copy-Item -Path "skia\modules\particles\include" -Destination "Binaries\particles\include" -Recurse 
