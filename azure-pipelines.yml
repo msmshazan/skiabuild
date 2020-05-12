@@ -77,7 +77,7 @@ jobs:
       autoninja -C out\Build_32 modules\skshaper
       autoninja -C out\Build_32 modules\sksg
       autoninja -C out\Build_32 modules\skparagraph
-      autoninja -C out\Build_32 modules\editor
+      autoninja -C out\Build_32 modules\editor_app
       autoninja -C out\Build_32 modules\skresources
       autoninja -C out\Build_32 modules\particles
       &("C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat")
@@ -86,7 +86,7 @@ jobs:
       autoninja -C out\Build_64 modules\skshaper
       autoninja -C out\Build_64 modules\sksg
       autoninja -C out\Build_64 modules\skparagraph
-      autoninja -C out\Build_64 modules\editor
+      autoninja -C out\Build_64 modules\editor_app
       autoninja -C out\Build_64 modules\skresources
       autoninja -C out\Build_64 modules\particles
     displayName: 'Build skia'
