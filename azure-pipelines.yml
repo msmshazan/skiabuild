@@ -58,7 +58,7 @@ jobs:
       $env:Path = "$pwd\depot_tools;" + $env:Path
       python -m pip --disable-pip-version-check install pywin32
       cd skia
-      (Get-Content gn/toolchain/BUILD.gn).replace('env_setup = "cmd /c $win_sdk/bin/SetEnv.cmd /x86 && "', ' ') | Set-Content gn/toolchain/BUILD.gn
+      (Get-Content gn/toolchain/BUILD.gn).replace('env_setup = "$shell $win_sdk/bin/SetEnv.cmd /x86 && "', ' ') | Set-Content gn/toolchain/BUILD.gn
       gn gen out/Build_32 --args='skia_enable_skottie=true skia_enable_tools=true skia_enable_skshaper=true skia_enable_gpu=true clang_win=\"C:\Program Files\LLVM\" is_official_build=true is_debug=false is_component_build=false skia_use_direct3d=true skia_use_vulkan=true skia_use_gl=true skia_use_freetype=true skia_use_harfbuzz=true skia_use_icu=true skia_use_system_expat=false skia_use_system_libjpeg_turbo=false skia_use_system_icu=false skia_use_system_libpng=false skia_use_system_libwebp=false skia_use_system_zlib=false skia_use_system_harfbuzz=false skia_use_system_freetype2 = false target_cpu=\"x86\"'
       gn gen out/Build_64 --args='skia_enable_skottie=true skia_enable_tools=true skia_enable_skshaper=true skia_enable_gpu=true clang_win=\"C:\Program Files\LLVM\" is_official_build=true is_debug=false is_component_build=false skia_use_direct3d=true skia_use_vulkan=true skia_use_gl=true skia_use_freetype=true skia_use_harfbuzz=true skia_use_icu=true skia_use_system_expat=false skia_use_system_libjpeg_turbo=false skia_use_system_icu=false skia_use_system_libpng=false skia_use_system_libwebp=false skia_use_system_zlib=false skia_use_system_harfbuzz=false skia_use_system_freetype2 = false target_cpu=\"x64\"'
       Get-Content -Path .\out\Build_32\build.ninja
