@@ -1,0 +1,17 @@
+diff --git a/src/gpu/d3d/GrD3DUtil.h b/src/gpu/d3d/GrD3DUtil.h
+index 7aec4b5cde..5c086219f9 100644
+--- a/src/gpu/d3d/GrD3DUtil.h
++++ b/src/gpu/d3d/GrD3DUtil.h
+@@ -74,10 +74,11 @@ static constexpr const char* GrDxgiFormatToStr(DXGI_FORMAT dxgiFormat) {
+     }
+ }
+ 
++#endif
++
+ static constexpr bool operator==(const D3D12_CPU_DESCRIPTOR_HANDLE& first,
+                                  const D3D12_CPU_DESCRIPTOR_HANDLE& second) {
+     return first.ptr == second.ptr;
+ }
+ 
+ #endif
+-#endif
