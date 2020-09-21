@@ -35,6 +35,7 @@ jobs:
       git clone https://skia.googlesource.com/skia
       cd skia
       git checkout $(SKIA_REVISION) .
+      git apply GrD3DUtil.patch
     displayName: 'Fetch skia repo'
 
   - powershell: |
