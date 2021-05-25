@@ -6,7 +6,7 @@ variables:
   DEPOT_TOOLS_WIN_TOOLCHAIN: '0'
   DEPOT_TOOLS_METRICS: '0'
   PYTHON_HOME: ''
-  SKIA_REVISION: '79aaa9b6c1c50cfd78b10bb0cee252f88fee2217'
+  SKIA_REVISION: '569c01bfa28fc28fc6a8c02aa586e2c1a4f26efd'
   PYTHONWARNINGS: 'ignore:DEPRECATION::pip._internal.cli.base_command'
   GCLIENT_PY3: '1'
 
