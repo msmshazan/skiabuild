@@ -71,17 +71,23 @@ jobs:
       autoninja -C out\Build_32 skia
       autoninja -C out\Build_32 modules/particles
       autoninja -C out\Build_32 modules/skottie
+      autoninja -C out\Build_32 modules/skplaintexteditor
       autoninja -C out\Build_32 modules/skparagraph
       autoninja -C out\Build_32 modules/skresources
+      autoninja -C out\Build_32 modules/svg
       autoninja -C out\Build_32 modules/sksg
+      autoninja -C out\Build_32 modules/skunicode
       autoninja -C out\Build_32 modules/skshaper
       &("C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat")
       autoninja -C out\Build_64 skia
       autoninja -C out\Build_64 modules/particles
       autoninja -C out\Build_64 modules/skottie
+      autoninja -C out\Build_64 modules/skplaintexteditor
       autoninja -C out\Build_64 modules/skparagraph
       autoninja -C out\Build_64 modules/skresources
+      autoninja -C out\Build_64 modules/svg
       autoninja -C out\Build_64 modules/sksg
+      autoninja -C out\Build_64 modules/skunicode
       autoninja -C out\Build_64 modules/skshaper
     displayName: 'Build skia'
 
@@ -100,12 +106,15 @@ jobs:
       Move-Item -Path "x86" -Destination "lib"
       Move-Item -Path "lib" -Destination "Binaries"
       Copy-Item -Path "skia\include" -Destination "Binaries" -Recurse 
-      Copy-Item -Path "skia\modules\skottie\include" -Destination "Binaries\skottie\include" -Recurse 
-      Copy-Item -Path "skia\modules\skresources\include" -Destination "Binaries\skresources\include" -Recurse 
-      Copy-Item -Path "skia\modules\skparagraph\include" -Destination "Binaries\skparagraph\include" -Recurse 
-      Copy-Item -Path "skia\modules\skshaper\include" -Destination "Binaries\skshaper\include" -Recurse 
-      Copy-Item -Path "skia\modules\sksg\include" -Destination "Binaries\sksg\include" -Recurse 
-      Copy-Item -Path "skia\modules\particles\include" -Destination "Binaries\particles\include" -Recurse 
+      Copy-Item -Path "skia\modules\skottie\include" -Destination "Binaries\modules\skottie\include" -Recurse 
+      Copy-Item -Path "skia\modules\skresources\include" -Destination "Binaries\modules\skresources\include" -Recurse 
+      Copy-Item -Path "skia\modules\skparagraph\include" -Destination "Binaries\modules\skparagraph\include" -Recurse 
+      Copy-Item -Path "skia\modules\skplaintexteditor\include" -Destination "Binaries\modules\skplaintexteditor\include" -Recurse 
+      Copy-Item -Path "skia\modules\svg\include" -Destination "Binaries\modules\svg\include" -Recurse 
+      Copy-Item -Path "skia\modules\skunicode\include" -Destination "Binaries\modules\skunicode\include" -Recurse 
+      Copy-Item -Path "skia\modules\skshaper\include" -Destination "Binaries\modules\skshaper\include" -Recurse 
+      Copy-Item -Path "skia\modules\sksg\include" -Destination "Binaries\modules\sksg\include" -Recurse 
+      Copy-Item -Path "skia\modules\particles\include" -Destination "Binaries\modules\particles\include" -Recurse 
       7z a $(Build.ArtifactStagingDirectory)\Skia.zip Binaries\*
     displayName: 'Copy Binaries'
 
