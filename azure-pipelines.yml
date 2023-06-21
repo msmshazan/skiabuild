@@ -17,7 +17,6 @@ jobs:
    vmImage: 'windows-2019'
   steps:
   - powershell: |
-      Import-Module $env:ChocolateyInstall\helpers\chocolateyProfile.psm1
       Invoke-WebRequest -Uri "https://storage.googleapis.com/chrome-infra/depot_tools.zip" -OutFile depot_tools.zip
       &7z x depot_tools.zip -odepot_tools
       Remove-Item depot_tools.zip
@@ -41,10 +40,10 @@ jobs:
   - powershell: |
       $env:DEPOT_TOOLS_WIN_TOOLCHAIN=0
       $env:Path = "$pwd\depot_tools;" + $env:Path
-      refreshenv
+      Update-SessionEnvironment
       cd skia
       python tools/git-sync-deps
-      refreshenv
+      Update-SessionEnvironment
     displayName: 'Setup skia deps'
 
   - script: |
@@ -54,7 +53,7 @@ jobs:
 
   - powershell: |
       choco install llvm 2>&1>$null
-      refreshenv
+      Update-SessionEnvironment
       $env:DEPOT_TOOLS_WIN_TOOLCHAIN=0
       $env:Path = "$pwd\depot_tools;" + $env:Path
       python -m pip --disable-pip-version-check install pywin32
