@@ -40,10 +40,10 @@ jobs:
   - powershell: |
       $env:DEPOT_TOOLS_WIN_TOOLCHAIN=0
       $env:Path = "$pwd\depot_tools;" + $env:Path
-      Update-SessionEnvironment
+      refreshenv
       cd skia
       python tools/git-sync-deps
-      Update-SessionEnvironment
+      refreshenv
     displayName: 'Setup skia deps'
 
   - script: |
@@ -53,7 +53,7 @@ jobs:
 
   - powershell: |
       choco install llvm 2>&1>$null
-      Update-SessionEnvironment
+      refreshenv
       $env:DEPOT_TOOLS_WIN_TOOLCHAIN=0
       $env:Path = "$pwd\depot_tools;" + $env:Path
       python -m pip --disable-pip-version-check install pywin32
