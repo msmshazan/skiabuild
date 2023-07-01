@@ -14,7 +14,7 @@ jobs:
 - job: Build_Skia
   timeoutInMinutes: 0
   pool:
-   vmImage: 'windows-2019'
+   vmImage: 'windows-latest'
   steps:
   - powershell: |
       Invoke-WebRequest -Uri "https://storage.googleapis.com/chrome-infra/depot_tools.zip" -OutFile depot_tools.zip
